@@ -118,9 +118,7 @@ def fitness_function(genomes,config):
 	win = WIN
 	gen += 1
 
-    # start by creating lists holding the genome itself, the
-    # neural network associated with the genome and the
-    # bird object that uses that network to play
+    
 	networks = []
 	androids = []
 	gene = []
@@ -150,14 +148,14 @@ def fitness_function(genomes,config):
 
 		lolipop_ind = 0
 		if len(androids) > 0:
-			if len(lolipops) > 1 and androids[0].x > lolipops[0].x + lolipops[0].LOLIPOP_TOP.get_width():  # determine whether to use the first or second
-				lolipop_ind = 1                                                                 # pipe on the screen for neural network input
+			if len(lolipops) > 1 and androids[0].x > lolipops[0].x + lolipops[0].LOLIPOP_TOP.get_width():  
+				lolipop_ind = 1                                                                
 
-		for x, android in enumerate(androids):  # give each bird a fitness of 0.1 for each frame it stays alive
+		for x, android in enumerate(androids):  
 			gene[x].fitness += 0.1
 			android.move()
 
-            # send bird location, top pipe location and bottom pipe location and determine from network whether to jump or not
+            
 			output = networks[androids.index(android)].activate((android.y, abs(android.y - lolipops[lolipop_ind].height), abs(android.y - lolipops[lolipop_ind].bottom)))
 
 			if output[0] > 0.5:  # we use a tanh activation function so result will be between -1 and 1. if over 0.5 jump
